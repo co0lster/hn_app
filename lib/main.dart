@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hn_app/src/articles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,11 +49,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildItem(Article article) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListTile(title: new Text(article.text, style: new TextStyle(fontSize: 24.0)),
-      subtitle: new Text("${article.commentsCount} comments"),
-        onTap: () {
-         // TODO
-        },
+      child: new ExpansionTile(
+        title: new Text(article.text, style: new TextStyle(fontSize: 24.0)),
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            new Text("${article.commentsCount} comments"),
+            new IconButton(
+              icon: new Icon(Icons.launch),
+              color: Colors.orangeAccent,
+              onPressed: () async {
+        final fakeUrl = "http://${article.domain}";
+        if (await canLaunch(fakeUrl)){
+          launch(fakeUrl);
+        }
+              }
+            )
+          ],
+        ),
+      ],
       ),
     );
   }
