@@ -39,9 +39,18 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
 
-        body: new ListView(
-
-          children: _articles.map(_buildItem).toList(),
+        body: RefreshIndicator(
+          onRefresh: () async {
+//            Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("REFRESHED")));
+            await new Future.delayed(const Duration(seconds: 1));
+            setState(() {
+              _articles.removeAt(0);
+            });
+          },
+          child: new ListView(
+          // ListViewBuilder for a infint scrolling
+            children: _articles.map(_buildItem).toList(),
+          ),
         )
     );
   }
