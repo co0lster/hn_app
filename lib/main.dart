@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hn_app/src/articles.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,14 +27,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
+  List<Article>  _articles = articles;
 
   @override
   Widget build(BuildContext context) {
@@ -43,27 +37,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
         title: Text(widget.title),
       ),
-      body: Center(
 
-        child: Column(
+        body: new Column(
 
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              'Hello',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          children: _articles.map((article) => new Text(article.text)).toList(),
+        )
     );
   }
 }
